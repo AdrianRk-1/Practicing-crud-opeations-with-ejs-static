@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./index.js" defer></script>
+    <title>Products List</title>
+  </head>
+  <body>
+    <section>
+      <h1>List of Total products</h1>
+      <ul id="list">
+        <span id="status"></span>
+      </ul>
+      <button id="button">Click Me</button>
+    </section>
+
+    <form id="create-product" action="/products" method="POST">
+      <label for="name">Product Name</label>
+      <input type="text" id="name" name="name" />
+      <label for="price">Product Price</label>
+      <input type="number" id="price" name="price" step="0.01" />
+      <label for="stock">Quantity of stock</label>
+      <input type="number" min="1" step="1" />
+      <label for="description">Enter a quick description of the product</label>
+      <textarea name="description"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

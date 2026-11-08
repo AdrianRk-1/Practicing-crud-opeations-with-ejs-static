@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="signup-form" action="/api/signup" method="POST">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="plan">Plan</label>
+      <select id="plan" name="plan">
+        <option value="free">Free</option>
+        <option value="pro">Pro</option>
+      </select>
+
+      <!-- Radio buttons share the same name -->
+      <label
+        ><input type="radio" name="contact" value="email" checked />
+        Email</label
+      >
+      <label><input type="radio" name="contact" value="phone" /> Phone</label>
+
+      <!-- Multiple checkboxes with same name = multiple values -->
+      <label
+        ><input type="checkbox" name="interests" value="news" /> News</label
+      >
+      <label
+        ><input type="checkbox" name="interests" value="offers" /> Offers</label
+      >
+
+      <textarea name="message"></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
