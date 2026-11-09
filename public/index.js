@@ -1,17 +1,16 @@
 const buttonRefresh = document.getElementById("button");
 const listContainer = document.getElementById("list");
+const productForm = document.getElementById("create-product");
+const statusText = document.getElementById("status");
 
 async function loadList() {
-  const status = document.getElementById("status");
-
-  status.textContent = "Loading...";
+  statusText.textContent = "Loading...";
   try {
     const res = await fetch("/products");
 
     if (!res.ok) {
-      const body = await res.json();
-      throw new Error(`HTTP error ${res.status}`);
-      //body.error ||
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || `HTTP error ${res.status}`);
     }
 
     listContainer.innerHTML = "";
@@ -21,18 +20,29 @@ async function loadList() {
       const priceTag = document.createElement("span");
       priceTag.textContent = p.price;
       listElement.textContent = p.name;
-      listContainer.append(listElement, priceTag);
+
+      const dltBtn = document.createElement("button");
+      dltBtn.textContent = "Delete";
+      dltBtn.addEventListener("click", async () => {
+        const res = await fetch(`/products/${p.id}`, { method: "DELETE" });
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          console.log(body);
+        }
+        loadList();
+      });
+      listElement.append(priceTag, dltBtn);
+
+      listContainer.append(listElement);
     });
-    status.textContent = "";
+    statusText.textContent = "";
   } catch (error) {
-    status.textContent = `Error: ${error.message}`;
+    statusText.textContent = `Error: ${error.message}`;
   }
 }
 
-loadList();
-
-async function uploadProduct() {
-  const productForm = document.getElementById("create-product");
+async function uploadProduct(event) {
+  event.preventDefault();
   const cleanedProductForm = new FormData(productForm);
   const readyProduct = Object.fromEntries(cleanedProductForm.entries());
 
@@ -44,10 +54,22 @@ async function uploadProduct() {
     });
 
     if (!res.ok) {
-      const body = await res.json();
-      throw new Error(`HtTP error ${res.status}`);
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || `HTTP error ${res.status}`);
     }
-  } catch (error) {}
+
+    result = await res.json();
+
+    productForm.reset();
+    loadList();
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 buttonRefresh.addEventListener("click", loadList);
+
+productForm.addEventListener("submit", uploadProduct);
+
+loadList();
