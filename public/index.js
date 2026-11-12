@@ -3,6 +3,8 @@ const listContainer = document.getElementById("list");
 const productForm = document.getElementById("create-product");
 const statusText = document.getElementById("status");
 
+
+/*Handles loading list of products */
 async function loadList() {
   statusText.textContent = "Loading...";
   try {
@@ -41,6 +43,8 @@ async function loadList() {
   }
 }
 
+
+/*handles post method */
 async function uploadProduct(event) {
   event.preventDefault();
   const cleanedProductForm = new FormData(productForm);
@@ -58,7 +62,7 @@ async function uploadProduct(event) {
       throw new Error(body.error || `HTTP error ${res.status}`);
     }
 
-    result = await res.json();
+   const result = await res.json();
 
     productForm.reset();
     loadList();
