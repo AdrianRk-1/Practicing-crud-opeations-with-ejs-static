@@ -29,4 +29,11 @@ productRoute.delete("/:id", findProduct, (req, res, next) => {
   console.log(productsList.products);
   res.status(204).json({ status: "Deleted succesfully" });
 });
+
+productRoute.patch("/:id", express.json(), findProduct, (req, res, next) => {
+  const price = req.body?.price;
+  if (price !== undefined) res.locals.product.price = price;
+  console.log(price);
+  res.status(200).json({ status: "Updated price" });
+});
 export default productRoute;
