@@ -6,6 +6,11 @@ import findProduct from "../middleware/findProduct.mjs";
 const productRoute = express.Router();
 
 productRoute.get("/", (req, res, next) => {
+  const { q, color, maxPrice } = req?.query;
+
+  if (q) {
+  }
+
   res.json(productsList.products);
 });
 
