@@ -3,6 +3,8 @@ const listContainer = document.getElementById("list");
 const productForm = document.getElementById("create-product");
 const statusText = document.getElementById("status");
 
+const searchForm = document.getElementById("find-product");
+
 /*function in chrage of handling requests, either returns the
 
 response parsed into am object or returns an error that travels up our functions
@@ -35,6 +37,7 @@ const api = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ price: newValue }),
     }),
+  queryProduct: (query) => request(`/products?${query}`),
 };
 
 /*Renders the ui elements by clearing the container each time
@@ -131,6 +134,17 @@ async function uploadProduct(event) {
   }
 }
 
+async function searchQuery(event) {
+  event.preventDefault();
+  const query = new URLSearchParams(new FormData(searchForm));
+
+  for (const [key, value] of [...query]) {
+    if (!value) query.delete(key);
+  }
+  api.queryProduct(query);
+}
+
 buttonRefresh.addEventListener("click", loadList);
 productForm.addEventListener("submit", uploadProduct);
+searchForm.addEventListener("submit", searchQuery);
 loadList();

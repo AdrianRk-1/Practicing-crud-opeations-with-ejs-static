@@ -26,5 +26,17 @@
       <textarea name="description"></textarea>
       <button type="submit">Submit</button>
     </form>
+
+    <form id="find-product" action="/products" method="GET">
+      <label for="search">Search for Product</label>
+      <input type="text" id="search" name="search" />
+      <select name="color">
+        <option value="black">Black</option>
+        <option value="green">Green</option>
+      </select>
+      <label for="max-price">Max Price</label>
+      <input type="text" name="max-price" id="max-price" />
+      <button type="Submit">Find</button>
+    </form>
   </body>
 </html>
