@@ -5,6 +5,10 @@ const statusText = document.getElementById("status");
 
 const searchForm = document.getElementById("find-product");
 
+const colorBox = document.getElementById("colors");
+
+const colorContainer = document.getElementById("color-container");
+
 /*function in chrage of handling requests, either returns the
 
 response parsed into am object or returns an error that travels up our functions
@@ -120,6 +124,22 @@ async function loadList() {
   }
 }
 
+colorBox.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+
+    const colorTagContainer = document.createElement("div");
+    const colorTag = document.createElement("span");
+    colorTag.textContent = `${colorBox.value}`;
+    const removeColor = document.createElement("button");
+    removeColor.textContent = "x";
+
+    colorTagContainer.append(colorTag, removeColor);
+    colorContainer.append(colorTagContainer);
+    colorBox.value = "";
+  }
+});
+
 async function uploadProduct(event) {
   event.preventDefault();
   const cleanedProductForm = new FormData(productForm);
@@ -141,7 +161,9 @@ async function searchQuery(event) {
   for (const [key, value] of [...query]) {
     if (!value) query.delete(key);
   }
-  api.queryProduct(query);
+  const res = api.queryProduct(query);
+
+  console.log(res);
 }
 
 buttonRefresh.addEventListener("click", loadList);

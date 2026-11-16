@@ -9,6 +9,17 @@ productRoute.get("/", (req, res, next) => {
   const { q, color, maxPrice } = req?.query;
 
   if (q) {
+    let results = productsList.products;
+    const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    results = results.filter((p) => {
+      const hayStack = `${p.name} ${p.price} ${p.color}`.toLowerCase();
+
+      return words.every((word) => hayStack.includes(word));
+    });
+
+    if (maxPrice) {
+      results = results.filter((p) => p.price <= Number(maxPrice));
+    }
   }
 
   res.json(productsList.products);
