@@ -22,6 +22,14 @@
       <input type="number" id="price" name="price" step="0.01" />
       <label for="stock">Quantity of stock</label>
       <input type="number" name="stock" min="1" step="1" />
+
+      <label for="category">Category</label>
+      <input type="text" name="category" />
+
+      <label for="colors">Colors</label>
+      <input type="text" id="colors" name="colors" />
+      <div id="color-container"></div>
+
       <label for="description">Enter a quick description of the product</label>
       <textarea name="description"></textarea>
       <button type="submit">Submit</button>
@@ -29,7 +37,7 @@
 
     <form id="find-product" action="/products" method="GET">
       <label for="search">Search for Product</label>
-      <input type="text" id="search" name="search" />
+      <input type="text" id="search" name="q" />
       <select name="color">
         <option value="black">Black</option>
         <option value="green">Green</option>
