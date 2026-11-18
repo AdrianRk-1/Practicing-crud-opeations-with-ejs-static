@@ -30,9 +30,11 @@ productRoute.post("/", express.json(), validateForm, (req, res, next) => {
     id: productsList.nextId++,
     name: res.locals.name,
     price: res.locals.price,
-    stock: res.locals.stock,
-    description: res.locals.description,
+    colors: res.locals.colors,
+    category: res.locals.category,
   });
+
+  console.log(productsList.products);
 
   res.status(201).json({ status: "Created new product" });
 });
