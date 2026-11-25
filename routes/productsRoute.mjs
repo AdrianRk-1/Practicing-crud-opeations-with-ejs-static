@@ -5,24 +5,37 @@ import findProduct from "../middleware/findProduct.mjs";
 
 const productRoute = express.Router();
 
+productRoute.get("/api/categories", (req, res, next) => {
+  const categoryArray = [
+    ...new Set(productsList.products.map((p) => p.category)),
+  ];
+  res.json(categoryArray);
+});
+
 productRoute.get("/", (req, res, next) => {
-  const { q, color, maxPrice } = req?.query;
+  const { q, category, maxPrice } = req?.query;
+
+  const results = productsList.products;
 
   if (q) {
-    let results = productsList.products;
     const words = q.toLowerCase().split(/\s+/).filter(Boolean);
     results = results.filter((p) => {
-      const hayStack = `${p.name} ${p.price} ${p.color}`.toLowerCase();
+      const hayStack =
+        `${p.name} ${p.price} ${p.colors} ${p.category}`.toLowerCase();
 
       return words.every((word) => hayStack.includes(word));
     });
 
+    if (category) {
+      results = results.filter((p) => p.category.includes(category));
+    }
+
     if (maxPrice) {
-      results = results.filter((p) => p.price <= Number(maxPrice));
+      results = results.filter((p) => p.price <= maxPrice);
     }
   }
 
-  res.json(productsList.products);
+  res.json(results);
 });
 
 productRoute.post("/", express.json(), validateForm, (req, res, next) => {
