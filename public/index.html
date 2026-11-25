@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
-    <script src="./refactoring.mjs" defer></script>
+    <script type="module" src="./refactoring.mjs" defer></script>
     <title>Products List</title>
   </head>
   <body>
@@ -22,7 +22,7 @@
       <input type="number" id="price" name="price" step="0.01" />
 
       <label for="category">Category</label>
-      <input type="text" name="category" />
+      <input type="text" name="category" id="category" />
 
       <label for="colors">Colors</label>
       <input type="text" id="colors" name="colors" />
@@ -34,12 +34,11 @@
     <form id="find-product" action="/products" method="GET">
       <label for="search">Search for Product</label>
       <input type="text" id="search" name="q" />
-      <select name="color">
-        <option value="black">Black</option>
-        <option value="green">Green</option>
-      </select>
+      <select name="categories" id="category-container"></select>
       <label for="max-price">Max Price</label>
       <input type="text" name="max-price" id="max-price" />
+
+      <label for="category"></label>
       <button type="Submit">Find</button>
     </form>
   </body>
